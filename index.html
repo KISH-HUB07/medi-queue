@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100 antialiased">
+  <head>
+    <meta charset="UTF-8" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- App Icons -->
+    <link rel="icon" type="image/jpeg" href="/icon-192.jpg" />
+    <link rel="apple-touch-icon" href="/icon-192.jpg" />
+
+    <!-- Viewport & Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+
+    <!-- PWA Meta Tags (Android / Chrome) -->
+    <meta name="theme-color" content="#0d9488" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="MediQueue" />
+
+    <!-- PWA Meta Tags (iOS Safari) -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MediQueue" />
+
+    <!-- Microsoft Tile -->
+    <meta name="msapplication-TileImage" content="/icon-192.jpg" />
+    <meta name="msapplication-TileColor" content="#0d9488" />
+
+    <!-- SEO -->
+    <meta name="description" content="MediQueue - AI-Based Smart Hospital Queue & Token Prediction System. Book digital consultation tokens and track live hospital wait times." />
+    <meta name="keywords" content="hospital queue, OPD token, medical appointment, AI queue prediction, digital hospital" />
+    <title>MediQueue | Smart Digital Hospital Token System</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="MediQueue - Smart Hospital Queue" />
+    <meta property="og:description" content="AI-powered hospital OPD queue management. Book tokens, track live wait times." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/icon-512.jpg" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Service Worker Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function () {
+          navigator.serviceWorker.register('/sw.js')
+            .then(function (registration) {
+              console.log('[MediQueue PWA] Service Worker registered:', registration.scope);
+            })
+            .catch(function (error) {
+              console.log('[MediQueue PWA] Service Worker registration failed:', error);
+            });
+        });
+      }
+
+      // PWA Install Prompt - capture and trigger later
+      let deferredInstallPrompt;
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        window.deferredInstallPrompt = e;
+        // Dispatch custom event so React can listen
+        window.dispatchEvent(new CustomEvent('pwaInstallAvailable'));
+      });
+
+      window.addEventListener('appinstalled', function () {
+        console.log('[MediQueue PWA] App installed successfully!');
+        window.deferredInstallPrompt = null;
+        window.dispatchEvent(new CustomEvent('pwaInstalled'));
+      });
+    </script>
+  </head>
+  <body class="h-full bg-slate-950 text-slate-100 overflow-x-hidden font-sans selection:bg-teal-500 selection:text-white">
+    <div id="root" class="h-full"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+# Dependencies
+node_modules/
+
+# Environment
+.env
+.env.production
+.env*.local
+!.env.example
+
+# Build outputs
+dist/
+build/
+*.apk
+*.aab
+
+# Flutter & Dart
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+**/build/
+**/.dart_tool/
+
+# Android
+.gradle/
+**/android/.gradle/
+**/android/app/build/
+**/android/build/
+
+# Binaries & Tooling downloads
+cmdline-tools.zip
+platform-tools/
+
+# Screenshots / Temporary
+phone_screen.png
+
+# IDE & System
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
